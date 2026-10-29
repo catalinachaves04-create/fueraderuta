@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fuera de Ruta</title>
+<style>
+:root{color-scheme:light;--cielo:#FBF8F3;--celeste:#8E6CB8;--azul:#5E4590;--sol:#2E9E6B;--papel:#FFFFFF;--tinta:#2A2138;--suave:#6B5F82;--rojo:#D64545;--verde:#2E9E6B;--lila:#8E6CB8;--linea:#E0D4EE;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+
+
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+body{margin:0;min-height:100%;background:var(--cielo);color:var(--tinta);font:1.05rem/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;color:var(--azul);margin:0;line-height:1.2}
+.subte{height:8px;background:linear-gradient(90deg,var(--lila) 0 34%,var(--verde) 34% 67%,var(--rojo) 67%)}
+header{background:var(--papel);border-bottom:1px solid var(--linea);padding:1rem 1.2rem}
+.top{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:.9rem}
+.sol{width:68px;height:68px;flex:none}
+.titulos{flex:1}
+h1{font-size:clamp(1.6rem,6vw,2.4rem);letter-spacing:.01em}
+.sub{margin:.15rem 0 0;color:var(--suave);font-style:italic;font-size:.98rem}
+.btn-menu{background:var(--azul);color:#fff;border:0;border-radius:10px;padding:.7rem 1rem;font:600 1rem system-ui,sans-serif;cursor:pointer;min-height:44px}
+
+main{max-width:900px;margin:0 auto;padding:1.4rem 1.2rem 3rem}
+.view[hidden]{display:none}
+.lead{font-size:1.2rem;margin:0 0 1.2rem;color:var(--tinta)}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.big{text-align:left;background:var(--papel);border:2px solid var(--linea);border-radius:16px;padding:1.4rem;cursor:pointer;color:var(--tinta);font:inherit;display:flex;flex-direction:column;gap:.4rem;border-top:8px solid var(--celeste);min-height:170px}
+.big:nth-child(2){border-top-color:var(--sol)}
+.big:hover,.big:focus-visible{border-color:var(--azul);transform:translateY(-2px)}
+.big .ic{font-size:2.2rem}
+.big strong{font:700 1.35rem Georgia,serif;color:var(--azul)}
+.big span.d{color:var(--suave)}
+.back{background:none;border:0;color:var(--azul);font:600 1rem system-ui,sans-serif;cursor:pointer;padding:.5rem 0;min-height:44px}
+.prog{height:8px;background:var(--linea);border-radius:99px;overflow:hidden;margin:.4rem 0 1.2rem}
+.prog i{display:block;height:100%;background:var(--sol);transition:width .25s}
+.paso{color:var(--suave);font-size:.95rem;margin:0}
+.q{font-size:1.6rem;margin:.2rem 0 1rem}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.7rem}
+.opt{background:var(--papel);border:2px solid var(--linea);border-radius:12px;padding:.9rem 1rem;text-align:left;cursor:pointer;font:inherit;color:var(--tinta);min-height:56px}
+.opts.mini{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+.opt small{display:block;color:var(--suave);font-size:.9rem}
+.por p{margin:.8rem 0}
+.buscar{width:100%;padding:.8rem;font:inherit;border:2px solid var(--linea);border-radius:10px;margin-bottom:.9rem;min-height:48px;background:var(--papel);color:var(--tinta)}
+.vacio{color:var(--suave);margin:.5rem 0}
+.acc{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.4rem}
+.btn.sm{padding:.55rem .9rem;font-size:.95rem;min-height:44px;text-decoration:none;display:inline-flex;align-items:center;border-radius:10px}
+.btn.sec{background:var(--papel);color:var(--azul);border:2px solid var(--azul)}
+.opt:hover,.opt:focus-visible{border-color:var(--azul);background:var(--cielo)}
+.opt.sel{border-color:var(--azul);box-shadow:inset 0 0 0 2px var(--sol)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1rem;margin-top:1rem}
+.card{background:var(--papel);border:2px solid var(--linea);border-radius:16px;padding:1.2rem;display:flex;flex-direction:column;gap:.5rem}
+.card h3{font-size:1.35rem}
+.chapa{align-self:flex-start;background:var(--azul);color:#fff;border:2px solid #fff;outline:2px solid var(--azul);border-radius:5px;padding:.05rem .7rem;font:700 .85rem system-ui,sans-serif;margin:2px}
+
+.match{align-self:flex-start;background:#1F7A52;color:#fff;border-radius:99px;padding:.1rem .8rem;font-weight:700;font-size:.9rem}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem}
+.tag{background:var(--cielo);border-radius:99px;padding:.1rem .7rem;font-size:.9rem}
+.why{margin:0;padding-left:1.1rem;color:var(--suave);font-size:.95rem}
+.score{font-weight:700}
+.mine{color:var(--verde);font-size:.92rem}
+.btn{background:var(--azul);color:#fff;border:0;border-radius:12px;padding:.9rem 1.5rem;font:700 1.1rem system-ui,sans-serif;cursor:pointer;min-height:48px}
+
+.btn.sec{background:var(--papel);color:var(--azul);border:2px solid var(--azul)}
+.center{text-align:center}
+#ruleta{font:700 clamp(1.4rem,5vw,2.2rem) Georgia,serif;color:var(--azul);min-height:3.4rem;margin:1.2rem 0}
+.acciones{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.2rem}
+.acciones.c{justify-content:center}
+.ovl{position:fixed;inset:0;background:rgba(15,30,50,.45);opacity:0;pointer-events:none;transition:opacity .25s;z-index:20}
+.ovl.on{opacity:1;pointer-events:auto}
+aside{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--papel);z-index:30;transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column;box-shadow:-6px 0 24px rgba(0,0,0,.2);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+aside.on{transform:none}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;border-bottom:1px solid var(--linea)}
+.x{background:none;border:0;font-size:1.8rem;cursor:pointer;color:var(--tinta);min-width:44px;min-height:44px}
+.db{padding:1.2rem;overflow-y:auto;flex:1}
+.mi{width:100%;display:flex;gap:.8rem;align-items:center;text-align:left;background:var(--cielo);border:2px solid var(--linea);border-radius:14px;padding:1rem;margin-bottom:.8rem;cursor:pointer;font:inherit;color:var(--tinta)}
+.mi:hover,.mi:focus-visible{border-color:var(--azul)}
+.mi b{display:block;font:700 1.1rem Georgia,serif;color:var(--azul)}
+.mi span.ic{font-size:1.8rem}
+label.l{display:block;font-weight:600;margin:.9rem 0 .3rem}
+select,input[type=text],input[type=email],input[type=tel]{width:100%;padding:.8rem;font:1rem system-ui,sans-serif;border:2px solid var(--linea);border-radius:10px;background:var(--papel);color:var(--tinta);min-height:48px}
+.dim{margin:.8rem 0}
+.dim>span{display:block;font-weight:600}
+.stars{display:flex;gap:.3rem;margin-top:.2rem}
+.stars button{font-size:1.6rem;background:var(--cielo);color:#b9a8d4;border:2px solid var(--linea);border-radius:10px;width:48px;height:48px;cursor:pointer}
+.stars button.on{background:#1F7A52;color:#fff;border-color:#1F7A52}
+.msg{margin:.8rem 0;font-weight:600;color:var(--verde)}
+.ben{padding-left:1.2rem}
+:focus-visible{outline:3px solid var(--sol);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="subte" aria-hidden="true"></div>
+<header>
+  <div class="top">
+    <svg class="sol" viewBox="32 10 236 236" aria-hidden="true"><circle cx="150" cy="128" r="112" fill="#FFFDF6" stroke="#8E6CB8" stroke-width="7"/><circle cx="150" cy="128" r="101" fill="none" stroke="#2E9E6B" stroke-width="3"/><circle cx="150" cy="128" r="94" fill="none" stroke="#2E9E6B" stroke-width="2" stroke-dasharray="2 6"/><g fill="none" stroke="#2E9E6B" stroke-width="4" stroke-linecap="round"><path d="M135 98 C122 86 148 78 136 66"/><path d="M165 98 C152 86 178 78 166 66"/><path transform="translate(98,100)" d="M0 0 C-14 0 -22 -10 -16 -19 C-11 -26 -1 -22 -4 -15 C-5 -12 -9 -13 -9 -15"/><path transform="translate(202,100) scale(-1,1)" d="M0 0 C-14 0 -22 -10 -16 -19 C-11 -26 -1 -22 -4 -15 C-5 -12 -9 -13 -9 -15"/></g><path transform="translate(98,104)" d="M0 0 C-6 6 -16 8 -24 4 C-18 -2 -8 -4 0 0Z" fill="#D64545"/><path transform="translate(202,104) scale(-1,1)" d="M0 0 C-6 6 -16 8 -24 4 C-18 -2 -8 -4 0 0Z" fill="#D64545"/><path d="M205 122 H220 C240 122 240 160 212 162" fill="none" stroke="#8E6CB8" stroke-width="9" stroke-linecap="round"/><path d="M95 110 H205 V145 C205 180 185 200 150 200 C115 200 95 180 95 145 Z" fill="#8E6CB8"/><path d="M97 138 H203" stroke="#2E9E6B" stroke-width="5"/><path d="M97 148 H203" stroke="#fff" stroke-width="3"/><ellipse cx="150" cy="208" rx="70" ry="9" fill="#F3E6C8" stroke="#8E6CB8" stroke-width="4"/></svg>
+    <div class="titulos">
+      <h1>Fuera de Ruta</h1>
+      <p class="sub">recomendador de cafeterías de especialidad en los barrios de CABA</p>
+    </div>
+    <button class="btn-menu" id="abrir" aria-haspopup="dialog" aria-controls="drawer">☰ Menú</button>
+  </div>
+</header>
+
+<main>
+  <section class="view" id="v-home">
+    <p class="lead">Buenos Aires tiene café bueno más allá de Palermo y Recoleta. ¿Cómo querés encontrarlo?</p>
+    <div class="choices">
+      <button class="big" id="go-quiz"><span class="ic">🧭</span><strong>Elegir a medida</strong><span class="d">Son 5 preguntas, menos de un minuto. Te recomendamos las cafeterías que mejor van con vos.</span></button>
+      <button class="big" id="go-azar"><span class="ic">🎲</span><strong>Cafetería al azar</strong><span class="d">Salí a explorar sin rumbo: te sorteamos una cafetería para visitar hoy.</span></button>
+    </div>
+  </section>
+
+  <section class="view" id="v-quiz" hidden>
+    <button class="back" id="q-back">← Volver</button>
+    <p class="paso" id="q-paso"></p>
+    <div class="prog" aria-hidden="true"><i id="q-bar"></i></div>
+    <h2 class="q" id="q-q" tabindex="-1"></h2>
+    <input class="buscar" id="q-buscar" type="search" placeholder="Escribí tu barrio para buscarlo" aria-label="Buscar barrio" hidden>
+    <p class="vacio" id="q-vacio" hidden>No encontramos ese barrio. Revisá cómo lo escribiste.</p>
+    <div class="opts" id="q-opts"></div>
+  </section>
+
+  <section class="view" id="v-res" hidden>
+    <button class="back" id="r-back">← Cambiar mis respuestas</button>
+    <h2 style="margin:.3rem 0">Tus cafeterías recomendadas</h2>
+    <div class="cards" id="r-cards"></div>
+    <div class="acciones"><button class="btn sec" id="r-home">Empezar de nuevo</button></div>
+  </section>
+
+  <section class="view center" id="v-azar" hidden>
+    <button class="back" id="a-back" style="float:left">← Volver</button>
+    <div style="clear:both"></div>
+    <h2>Cafetería al azar</h2>
+    <div id="ruleta" aria-live="polite">¿Qué cafetería te toca?</div>
+    <div class="cards" id="a-card" style="max-width:400px;margin:0 auto;text-align:left"></div>
+    <div class="acciones c"><button class="btn" id="a-btn">Tirar los dados</button></div>
+  </section>
+</main>
+
+<div class="ovl" id="ovl"></div>
+<aside id="drawer" role="dialog" aria-modal="true" aria-label="Menú" aria-hidden="true">
+  <div class="dh"><strong id="d-tit" style="font:700 1.2rem Georgia,serif;color:var(--azul)">Menú</strong><button class="x" id="cerrar" aria-label="Cerrar menú">×</button></div>
+  <div class="db">
+    <div id="d-menu">
+      <button class="mi" data-go="rate"><span class="ic">⭐</span><span><b>Calificar una cafetería</b>Contanos cómo te fue en cinco aspectos.</span></button>
+      <button class="mi" data-go="dueno"><span class="ic">🏠</span><span><b>Soy dueño de una cafetería</b>Sumá tu local y probá 1 mes gratis.</span></button>
+      <button class="mi" data-go="por"><span class="ic">☕</span><span><b>Por qué hicimos esta app</b>La idea detrás de Fuera de Ruta.</span></button>
+      <button class="mi" data-go="fav"><span class="ic">♥</span><span><b>Mis favoritas</b>Las cafeterías que guardaste.</span></button>
+    </div>
+
+    <div id="d-rate" hidden>
+      <button class="back" data-go="menu">← Menú</button>
+      <h2 style="font-size:1.4rem">Calificar una cafetería</h2>
+      <label class="l" for="c-cafe">¿Cuál visitaste?</label>
+      <select id="c-cafe"></select>
+      <div id="dims"></div>
+      <button class="btn" id="guardar">Guardar calificación</button>
+      <p class="msg" id="c-msg" aria-live="polite"></p>
+    </div>
+
+    <div id="d-fav" hidden>
+      <button class="back" data-go="menu">← Menú</button>
+      <h2 style="font-size:1.4rem">Mis favoritas</h2>
+      <div class="cards" id="fav-list" style="grid-template-columns:1fr"></div>
+    </div>
+
+    <div id="d-por" class="por" hidden>
+      <button class="back" data-go="menu">← Menú</button>
+      <h2 style="font-size:1.4rem">Por qué hicimos esta app</h2>
+      <p>Notamos que las cafeterías de especialidad se están saturando en el corredor norte de CABA. También notamos que en esas zonas hay mucho consumo: la gente va, hace fila y vuelve.</p>
+      <p>Entonces nos preguntamos qué pasa con los barrios más periféricos de la ciudad, y cuántas cafeterías hay ahí sin visibilización.</p>
+      <p>Fuera de Ruta nace para eso: ayudarte a descubrir cafeterías de barrio que quedan fuera del circuito más conocido, y darles a sus dueños un lugar para que más gente las encuentre.</p>
+    </div>
+
+    <div id="d-dueno" hidden>
+      <button class="back" data-go="menu">← Menú</button>
+      <h2 style="font-size:1.4rem">Sumá tu cafetería</h2>
+      <p>Llegá a quienes buscan café de especialidad lejos del circuito masivo.</p>
+      <ul class="ben"><li><strong>1 mes de prueba gratis</strong> desde que tu cafetería se incluye, sin tarjeta.</li><li>Revisamos cada solicitud antes de aprobarla.</li><li>Ficha propia con tu especialidad y tipo de espacio.</li><li>Calificaciones reales de tus clientes.</li></ul>
+      <form id="alta">
+        <label class="l" for="a-nombre">Nombre de la cafetería</label><input id="a-nombre" type="text" required>
+        <label class="l" for="a-barrio">Barrio</label><input id="a-barrio" type="text" required>
+        <label class="l" for="a-resp">Tu nombre</label><input id="a-resp" type="text" required>
+        <label class="l" for="a-mail">Email de contacto</label><input id="a-mail" type="email" required>
+        <label class="l" for="a-dir">Dirección</label><input id="a-dir" type="text" required>
+        <label class="l" for="a-tel">Teléfono o WhatsApp</label><input id="a-tel" type="tel" required>
+        <label class="l" for="a-web">Instagram o sitio web (opcional)</label><input id="a-web" type="text">
+        <label class="l" for="a-esp">Especialidad de la casa</label><input id="a-esp" type="text" required placeholder="Ej.: filtrados de origen único">
+        <label class="l" for="a-precio">Rango de precio</label><select id="a-precio"><option>Económico</option><option>Moderado</option><option>Premium</option></select>
+        <label class="l" for="a-lugar">Tipo de espacio</label><select id="a-lugar"><option>Mesas afuera</option><option>Mesas adentro</option><option>Ambas</option></select>
+        <input id="a-trampa" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+        <p><button class="btn" type="submit">Enviar solicitud</button></p>
+      </form>
+      <p class="msg" id="alta-ok" role="status"></p>
+    </div>
+  </div>
+</aside>
+
+<script>
+const BARRIOS=["Agronomía","Almagro","Balvanera","Barracas","Boedo","Caballito","Chacarita","Coghlan","Constitución","Flores","Floresta","La Boca","La Paternal","Liniers","Mataderos","Monserrat","Monte Castro","Nueva Pompeya","Parque Avellaneda","Parque Chacabuco","Parque Chas","Parque Patricios","Puerto Madero","Recoleta","Retiro","Saavedra","San Cristóbal","San Nicolás","San Telmo","Vélez Sarsfield","Versalles","Villa Crespo","Villa del Parque","Villa Devoto","Villa General Mitre","Villa Lugano","Villa Luro","Villa Ortúzar","Villa Pueyrredón","Villa Real","Villa Riachuelo","Villa Santa Rita","Villa Soldati","Villa Urquiza"];
+const STEPS=[
+{k:"barrio",q:"¿En qué barrio andás?",o:[["","Cualquiera","Me da igual, sorprendeme"],...BARRIOS.map(b=>[b,b,""])]},
+{k:"motivo",q:"¿Por qué vas a ir?",o:[["estudiar","📚 Estudiar o trabajar","Enchufes, espacio, tranquilidad"],["amigos","👋 Juntada con amigos","Mesas grandes, charlas, buen clima"],["tranquilo","🌿 Relajarme","Pausa, lectura, desconexión"],["merienda","🥐 Merienda contundente","Budines, tortas caseras, medialunas zarpadas"]]},
+{k:"foco",q:"¿Qué es lo que más te importa?",o:[["cafe","☕ El café","Grano, filtrados, latte art"],["pasteleria","🥮 La pastelería","Contundencia y dulce"],["conectividad","🔌 Poder trabajar","Conectividad y comodidad"],["ambiente","☀️ El ambiente","Entorno y atmósfera"]]},
+{k:"precio",q:"¿Cuánto querés gastar?",o:[["1","🪙 Cercano al bolsillo","Económico, buena relación precio-calidad"],["2","💵 Moderado","Precio estándar de especialidad"],["3","💎 Un capricho","Experiencia premium"]]},
+{k:"espacio",q:"¿Dónde te querés sentar?",o:[["afuera","☀️ Mesa afuera",""],["adentro","🛋️ Mesa adentro",""]]}
+];
+const CAFES=[
+{id:1,n:"Ochava Trece",b:"Parque Chacabuco",d:"Ventanales y mesas largas, pensada para quedarse horas con la notebook.",e:"Filtrados de origen único",m:["estudiar","tranquilo"],f:["cafe","conectividad"],p:2,s:["adentro"],pt:4.6},
+{id:2,n:"Taller de Grano",b:"Villa Urquiza",d:"Tostadero chico a la vista; el barista te cuenta de dónde viene cada lote.",e:"Espresso de tueste propio",m:["amigos","estudiar"],f:["cafe"],p:2,s:["adentro","afuera"],pt:4.7},
+{id:3,n:"Bodegón del Budín",b:"Boedo",d:"Budines de naranja y limón, tortas caseras y medialunas grandes, todo del día.",e:"Pastelería de la casa",m:["merienda","amigos"],f:["pasteleria"],p:1,s:["adentro"],pt:4.5},
+{id:4,n:"Tostadores del Adoquín",b:"Barracas",d:"Galpón reciclado con mesas en la vereda empedrada y café de método.",e:"V60 y Chemex",m:["amigos","tranquilo"],f:["cafe","ambiente"],p:2,s:["afuera","adentro"],pt:4.4},
+{id:5,n:"Café del Chas",b:"Parque Chas",d:"Sobre las calles que se enroscan: patio con glicinas y un silencio raro para la ciudad.",e:"Latte art y té de hebras",m:["tranquilo"],f:["ambiente"],p:2,s:["afuera"],pt:4.8},
+{id:6,n:"La Biblioteca",b:"Almagro",d:"Estantes con libros prestados, enchufes en cada mesa y wifi estable.",e:"Café de filtro ilimitado",m:["estudiar","tranquilo"],f:["conectividad","cafe"],p:2,s:["adentro"],pt:4.3},
+{id:7,n:"Pompeya Vapor",b:"Nueva Pompeya",d:"Mesas de madera, tostadas con dulce de leche y medialunas de manteca.",e:"Medialunas y submarinos",m:["merienda","amigos"],f:["pasteleria"],p:1,s:["adentro","afuera"],pt:4.2},
+{id:8,n:"Saavedra Tostado",b:"Saavedra",d:"A una cuadra del parque: mesas grandes para juntadas largas y café bien servido.",e:"Cold brew y flat white",m:["amigos","merienda"],f:["ambiente","cafe"],p:2,s:["afuera"],pt:4.5},
+{id:9,n:"Ortúzar Filtrado",b:"Villa Ortúzar",d:"Barra de seis lugares, catas guiadas y granos de microlotes.",e:"Catas de microlotes",m:["tranquilo"],f:["cafe"],p:3,s:["adentro"],pt:4.9},
+{id:10,n:"Patio Floresta",b:"Floresta",d:"Patio con parra y mesas al sol, ideal para una merienda larga de domingo.",e:"Tortas y café de autor",m:["amigos","merienda","tranquilo"],f:["ambiente","pasteleria"],p:3,s:["afuera"],pt:4.6},
+{id:11,n:"Fuelle y Taza",b:"San Cristóbal",d:"Mesas chicas, buen café a precio de barrio y mucha gente leyendo.",e:"Espresso económico",m:["estudiar"],f:["conectividad","cafe"],p:1,s:["adentro"],pt:4.1}
+];
+const DIMS=["Café","Pastelería","Experiencia","Servicio","Precio"];
+const PRECIO={1:"🪙 Económico",2:"💵 Moderado",3:"💎 Premium"};
+const $=s=>document.querySelector(s);
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}};
+let ratings=store.get("fdr:ratings",{});
+
+/* vistas */
+function show(id){document.querySelectorAll(".view").forEach(v=>v.hidden=v.id!==id);window.scrollTo({top:0})}
+function card(c,pct,why){
+  const r=ratings[c.id],u=r?Object.values(r).reduce((a,b)=>a+b,0)/Object.values(r).length:null;
+  return `<article class="card">${pct!=null?`<span class="match">${pct}% de afinidad</span>`:""}
+  <h3>${c.n}</h3><span class="chapa">${c.b}</span><p style="margin:0">${c.d}</p>
+  <div class="tags"><span class="tag">${c.e}</span><span class="tag">${PRECIO[c.p]}</span>${c.s.map(x=>`<span class="tag">${x==="afuera"?"☀️ Mesa afuera":"🛋️ Mesa adentro"}</span>`).join("")}</div>
+  ${why&&why.length?`<ul class="why">${why.map(w=>`<li>${w}</li>`).join("")}</ul>`:""}
+  <div class="score">★ ${c.pt.toFixed(1)}</div>${u!=null?`<div class="mine">Tu calificación: ${u.toFixed(1)} / 5</div>`:""}
+  <div class="acc"><a class="btn sec sm" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.n+", "+c.b+", Buenos Aires")}">📍 Cómo llegar</a><button class="btn sec sm" data-rate="${c.id}">⭐ Calificar</button><button class="btn sec sm" data-fav="${c.id}" aria-pressed="${favs.includes(c.id)}">${favs.includes(c.id)?"♥ Guardada":"♡ Guardar"}</button></div></article>`;
+}
+
+/* cuestionario por pasos */
+let paso=0,resp={};
+function renderPaso(){
+  const s=STEPS[paso];
+  $("#q-paso").textContent="Pregunta "+(paso+1)+" de "+STEPS.length;
+  $("#q-bar").style.width=((paso)/STEPS.length*100+10)+"%";
+  $("#q-q").textContent=s.q;
+  $("#q-opts").className="opts"+(s.k==="barrio"?" mini":"");
+  $("#q-buscar").hidden=s.k!=="barrio";$("#q-buscar").value="";$("#q-vacio").hidden=true;
+  $("#q-opts").innerHTML=s.o.map(o=>`<button class="opt${resp[s.k]===o[0]?" sel":""}" data-v="${o[0]}">${o[1]}${o[2]?`<small>${o[2]}</small>`:""}</button>`).join("");
+  $("#q-q").focus({preventScroll:true});
+}
+function start(){paso=0;resp={};renderPaso();show("v-quiz")}
+$("#go-quiz").onclick=start;
+const norm=t=>t.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+$("#q-buscar").addEventListener("input",e=>{
+  const t=norm(e.target.value.trim());let n=0;
+  document.querySelectorAll("#q-opts .opt").forEach(b=>{const ok=!t||norm(b.textContent).includes(t);b.hidden=!ok;if(ok)n++});
+  $("#q-vacio").hidden=n>0;
+});
+let favs=store.get("fdr:favs",[]);
+function renderFavs(){
+  $("#fav-list").innerHTML=favs.length?favs.map(id=>card(CAFES.find(c=>c.id===id))).join(""):"<p>Todavía no guardaste ninguna cafetería. Tocá “♡ Guardar” en una recomendación.</p>";
+}
+document.addEventListener("click",e=>{
+  const r=e.target.closest("[data-rate]");
+  if(r){abrir();panel("rate");$("#c-cafe").value=r.dataset.rate;paint();$("#c-msg").textContent="";return}
+  const f=e.target.closest("[data-fav]");
+  if(f){
+    const id=+f.dataset.fav;
+    favs=favs.includes(id)?favs.filter(x=>x!==id):[...favs,id];
+    store.set("fdr:favs",favs);
+    const on=favs.includes(id);
+    document.querySelectorAll('[data-fav="'+id+'"]').forEach(b=>{b.setAttribute("aria-pressed",on);b.textContent=on?"♥ Guardada":"♡ Guardar"});
+    if(!$("#d-fav").hidden)renderFavs();
+  }
+});
+$("#q-opts").addEventListener("click",e=>{
+  const b=e.target.closest(".opt");if(!b)return;
+  resp[STEPS[paso].k]=b.dataset.v;
+  if(paso<STEPS.length-1){paso++;renderPaso();window.scrollTo({top:0})}else recomendar();
+});
+$("#q-back").onclick=()=>{if(paso>0){paso--;renderPaso()}else show("v-home")};
+function recomendar(){
+  const q=resp,pr=+q.precio;
+  const res=CAFES.map(c=>{
+    let s=0,why=[];
+    if(q.barrio&&c.b===q.barrio){s+=3;why.push("Está en "+c.b)}else if(!q.barrio)s+=1.5;
+    if(c.m.includes(q.motivo)){s+=2;why.push("Va con tu plan de hoy")}
+    if(c.f.includes(q.foco)){s+=2;why.push("Se destaca en lo que más te importa")}
+    if(c.p===pr){s+=2;why.push("Precio que buscabas")}else if(Math.abs(c.p-pr)===1)s+=1;
+    if(c.s.includes(q.espacio)){s+=1;why.push("Tiene "+(q.espacio==="afuera"?"mesas afuera":"lugar adentro"))}
+    return{c,why,pct:Math.round(Math.min(s,10)*10)};
+  }).sort((a,b)=>b.pct-a.pct||b.c.pt-a.c.pt).slice(0,3);
+  $("#r-cards").innerHTML=res.map(r=>card(r.c,r.pct,r.why)).join("");
+  show("v-res");
+}
+$("#r-back").onclick=()=>{paso=STEPS.length-1;renderPaso();show("v-quiz")};
+$("#r-home").onclick=()=>show("v-home");
+
+/* azar */
+let busy=false;
+function sortear(){
+  if(busy)return;busy=true;
+  const out=$("#ruleta");$("#a-card").innerHTML="";let n=0;
+  const t=setInterval(()=>{out.textContent=CAFES[Math.floor(Math.random()*CAFES.length)].n;
+    if(++n>14){clearInterval(t);
+      const c=CAFES[Math.floor(Math.random()*CAFES.length)];
+      out.textContent="📍 "+c.n;$("#a-card").innerHTML=card(c);
+      $("#a-btn").textContent="Probar otra";busy=false}},90);
+}
+$("#go-azar").onclick=()=>{$("#ruleta").textContent="¿Qué cafetería te toca?";$("#a-card").innerHTML="";$("#a-btn").textContent="Tirar los dados";show("v-azar")};
+$("#a-btn").onclick=sortear;
+$("#a-back").onclick=()=>show("v-home");
+
+/* menú lateral */
+const dr=$("#drawer"),ovl=$("#ovl");
+function panel(n){
+  $("#d-menu").hidden=n!=="menu";$("#d-rate").hidden=n!=="rate";$("#d-dueno").hidden=n!=="dueno";$("#d-por").hidden=n!=="por";$("#d-fav").hidden=n!=="fav";if(n==="fav")renderFavs();
+  $("#d-tit").textContent=n==="rate"?"Calificar":n==="dueno"?"Para dueños":n==="por"?"Sobre el proyecto":n==="fav"?"Mis favoritas":"Menú";
+}
+function abrir(){panel("menu");dr.classList.add("on");ovl.classList.add("on");dr.setAttribute("aria-hidden","false");$("#cerrar").focus()}
+function cerrar(){dr.classList.remove("on");ovl.classList.remove("on");dr.setAttribute("aria-hidden","true");$("#abrir").focus()}
+$("#abrir").onclick=abrir;$("#cerrar").onclick=cerrar;ovl.onclick=cerrar;
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&dr.classList.contains("on"))cerrar()});
+dr.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)panel(b.dataset.go)});
+
+/* calificar */
+let draft={};
+$("#c-cafe").innerHTML=CAFES.map(c=>`<option value="${c.id}">${c.n} · ${c.b}</option>`).join("");
+$("#dims").innerHTML=DIMS.map(d=>`<div class="dim"><span>${d}</span><div class="stars" data-dim="${d}">${[1,2,3,4,5].map(n=>`<button type="button" data-v="${n}" aria-label="${d}: ${n} de 5">★</button>`).join("")}</div></div>`).join("");
+function paint(){
+  draft={...(ratings[$("#c-cafe").value]||{})};
+  document.querySelectorAll(".stars").forEach(el=>{const v=draft[el.dataset.dim]||0;el.querySelectorAll("button").forEach(b=>b.classList.toggle("on",+b.dataset.v<=v))});
+}
+paint();
+$("#c-cafe").onchange=()=>{paint();$("#c-msg").textContent=""};
+$("#dims").addEventListener("click",e=>{
+  const b=e.target.closest("button");if(!b)return;
+  const el=b.parentElement;draft[el.dataset.dim]=+b.dataset.v;
+  el.querySelectorAll("button").forEach(x=>x.classList.toggle("on",+x.dataset.v<=+b.dataset.v));
+});
+$("#guardar").onclick=()=>{
+  const falta=DIMS.filter(d=>!draft[d]),m=$("#c-msg");
+  if(falta.length){m.style.color="var(--rojo)";m.textContent="Falta calificar: "+falta.join(", ")+".";return}
+  ratings[$("#c-cafe").value]={...draft};
+  m.style.color="var(--verde)";
+  m.textContent=store.set("fdr:ratings",ratings)?"¡Gracias! Guardamos tu calificación en este dispositivo.":"No pudimos guardarla en el navegador; vale mientras la página siga abierta.";
+};
+
+/* alta dueños */
+const SCRIPT_URL="";
+$("#alta").addEventListener("submit",async e=>{
+  e.preventDefault();
+  if($("#a-trampa").value)return;
+  const btn=e.target.querySelector("button[type=submit]");
+  const r={cafe:$("#a-nombre").value.trim(),barrio:$("#a-barrio").value.trim(),direccion:$("#a-dir").value.trim(),resp:$("#a-resp").value.trim(),mail:$("#a-mail").value.trim(),tel:$("#a-tel").value.trim(),web:$("#a-web").value.trim(),especialidad:$("#a-esp").value.trim(),precio:$("#a-precio").value,espacio:$("#a-lugar").value};
+  const ok=$("#alta-ok");
+  if(!SCRIPT_URL){ok.style.color="var(--rojo)";ok.textContent="El envío de solicitudes todavía no está activado en esta página. Probá de nuevo más tarde.";return}
+  btn.disabled=true;ok.style.color="var(--tinta)";ok.textContent="Enviando tu solicitud…";
+  try{await fetch(SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(r)})}
+  catch(err){ok.style.color="var(--rojo)";ok.textContent="No pudimos enviar la solicitud. Revisá tu conexión e intentá de nuevo.";btn.disabled=false;return}
+  btn.disabled=false;ok.style.color="var(--verde)";
+  $("#alta-ok").textContent="¡Gracias, "+r.resp+"! Recibimos la solicitud de “"+r.cafe+"” ("+r.barrio+"). Vamos a tardar unos días en revisarla y aprobarla. Tu cafetería pasa a formar parte de nuestra base de datos recién cuando la incluyamos, y ahí empieza tu mes gratis. Te escribimos a "+r.mail+".";
+  e.target.reset();
+});
+</script>
+</body>
+</html>
